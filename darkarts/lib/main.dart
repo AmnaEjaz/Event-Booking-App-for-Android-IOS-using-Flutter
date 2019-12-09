@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the GIT COMMIT button this many times:',
+              'You have pushed the GIT COMMIT SECONDDDD button this many times:',
             ),
             Text(
               '$_counter',
