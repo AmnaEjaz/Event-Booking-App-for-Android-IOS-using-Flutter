@@ -3,11 +3,13 @@ import "dart:async";
 import 'package:darkarts/models/event_model.dart';
 import 'package:http/http.dart' as http;
 
-class PlayerApiProvider {
+class EventsApiProvider {
 
   String baseUrl = "https://www.easports.com/fifa/ultimate-team/api/fut/item?";
   final successCode = 200;
 
+
+  //for Http calls
   // Future<List<Events>> fetchEventsById(String countryId) async {
   //   final response = await http.get(baseUrl + "country=" + countryId);
 
@@ -20,27 +22,46 @@ class PlayerApiProvider {
   //   return parseResponse(response);
   // }
 
-Future<List<Event>> fetchEvents() {
-  return Future.delayed(Duration(seconds: 4), () => eventsmock);
-}
-
+  //for http calls
   // List<Event> parseResponse(http.Response response) {
   //   final responseString = jsonDecode(response.body);
 
   //   if (response.statusCode == successCode) {
-  //     return responseString;
+  //     return GetEvents.fromJson(responseString).event;
   //   } else {
   //     throw Exception('failed to load players');
   //   }
   // }
+
+Future<List<Event>> getAllEvents() {
+  return Future.delayed(Duration(seconds: 4), () => parseArray(mockEvents));
+}
+
+// Future<List<Event>> getEventByEventCode(String eventCode) {
+//   return Future.delayed(Duration(seconds: 4),
+  
+//   );
+// }
+
+
+
+    List<Event> parseArray(obj) {
+    final responseString = jsonDecode(obj);
+
+    if (obj!=null) {
+      return GetEvents.fromJson(responseString).event;
+    } else {
+      throw Exception('Empty');
+    }
+  }
   
 
 }
 
 
 
-  var eventsmock = 
-    {
+  // var eventsmock = new GetEvents.fromJson(test);
+var mockEvents =  [{
       "EventId": 1004,
       "TenantId": 1,
       "ArtistId": 3234296,
@@ -78,9 +99,6 @@ Future<List<Event>> fetchEvents() {
       "EventLikesCount": 0,
       "NatEsEventWaitList": null,
       "NatEsEventImage": null,
-      "NatEsEventFacility": [],
-      "NatEsEventSeatingPlan": [],
-      "NatEsEventTicketPrice": [],
       "VenueId": 63,
       "StartDate": null,
       "EndDate": null,
@@ -99,5 +117,6 @@ Future<List<Event>> fetchEvents() {
       "VenueName": "Demo Venue",
       "VenueRating": 0.0,
       "LikeStatus": true
-    };
+    }];
+    
 

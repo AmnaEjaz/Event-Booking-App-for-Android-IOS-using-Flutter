@@ -28,8 +28,8 @@ class EventListingBloc extends Bloc<EventListingEvent, EventListingState> {
         //       .fetchEventsByCountry(event);
         // } 
         
-        if (event is SearchTextChangedEvent) {
-          events = await eventRepository.fetchEventsByName(event.searchTerm);
+        if (event is getAllEventsEvent) {
+          events = await eventRepository.getAllEvents();
         }
         if (events.length == 0) {
           yield EventEmptyState();

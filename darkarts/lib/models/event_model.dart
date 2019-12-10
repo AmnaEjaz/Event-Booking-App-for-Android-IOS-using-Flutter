@@ -1,3 +1,26 @@
+class GetEvents {
+  List<Event> event;
+
+  GetEvents({this.event});
+
+  GetEvents.fromJson(Map<String, dynamic> json) {
+    if (json['Event'] != null) {
+      event = new List<Event>();
+      json['Event'].forEach((v) {
+        event.add(new Event.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.event != null) {
+      data['Event'] = this.event.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
 class Event {
   int eventId;
   int tenantId;

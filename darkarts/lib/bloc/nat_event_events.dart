@@ -7,7 +7,6 @@ abstract class EventListingEvent{}
 //   final Events event;
 //   EventSelectedEvent({@required this.event}) : assert(event!=null);
 // }
-class SearchTextChangedEvent extends EventListingEvent {
-  final String searchTerm;
-  SearchTextChangedEvent({@required this.searchTerm}) : assert(searchTerm != null);
+class getAllEventsEvent extends EventListingEvent {
+  getAllEventsEvent();
 }
