@@ -28,13 +28,15 @@ class EventListingBloc extends Bloc<EventListingEvent, EventListingState> {
         //       .fetchEventsByCountry(event);
         // } 
         
-        if (event is getAllEventsEvent) {
+        if (event is GetAllEventsEvent) {
           events = await eventRepository.getAllEvents();
         }
         if (events.length == 0) {
           yield EventEmptyState();
         } else {
+          print(events);
           yield EventFetchedState(events: events);
+
         }
       } catch (_) {
         yield EventErrorState();

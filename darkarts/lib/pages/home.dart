@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:darkarts/bloc/nat_event_bloc.dart';
+import 'package:darkarts/bloc/nat_event_events.dart';
 import 'package:darkarts/pages/event_listing.dart';
 import 'package:darkarts/services/repository.dart';
 
@@ -22,6 +23,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _eventListingBloc=EventListingBloc(eventRepository: widget.eventRepository);
+    _eventListingBloc.add(GetAllEventsEvent());
+
   }
   @override
   void dispose() {
@@ -30,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-          builder: (BuildContext context)=>_eventListingBloc,
+          create: (BuildContext context)=>_eventListingBloc,
           child: Scaffold(
           backgroundColor: Colors.blue[900],
         appBar: AppBar(

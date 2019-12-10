@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:darkarts/models/event_model.dart';
+// import 'package:flutter/material.dart';
+// import 'package:darkarts/models/event_model.dart';
 
 abstract class EventListingEvent{}
 
@@ -7,6 +7,6 @@ abstract class EventListingEvent{}
 //   final Events event;
 //   EventSelectedEvent({@required this.event}) : assert(event!=null);
 // }
-class getAllEventsEvent extends EventListingEvent {
-  getAllEventsEvent();
+class GetAllEventsEvent extends EventListingEvent {
+  GetAllEventsEvent();
 }

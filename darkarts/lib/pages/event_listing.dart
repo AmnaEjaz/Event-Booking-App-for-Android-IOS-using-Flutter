@@ -32,15 +32,15 @@ class EventListing extends StatelessWidget {
 
   Widget buildEventsList(List<Event> events) {
     return Expanded(
-        child: ListView.separated(
-    itemBuilder: (BuildContext context, index) {
+      child: ListView.separated(
+      itemBuilder: (BuildContext context, index) {
       Event event = events[index];
       return Container(
         color: Colors.white30,
         child: ListTile(
           leading: CircleAvatar(
             child: Image.network(
-              event.paintingImage,
+               event.eventName,
             ),
             radius: 30.0,
             backgroundColor: Colors.blue[50],
@@ -50,7 +50,7 @@ class EventListing extends StatelessWidget {
             style: TextStyle(fontSize: 22.0, color: Colors.black),
           ),
           subtitle: Text(
-            "Date: " + event.startDate.toString(),
+             "Date: " + event.eventName.toString(),
             style: TextStyle(fontSize: 16.0, color: Colors.black87),
           ),
           trailing: IconButton(
