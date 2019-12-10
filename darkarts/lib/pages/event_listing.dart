@@ -4,6 +4,7 @@ import 'package:darkarts/bloc/nat_event_bloc.dart';
 import 'package:darkarts/bloc/nat_event_states.dart';
 import 'package:darkarts/models/event_model.dart';
 import 'package:darkarts/widgets/message.dart';
+import 'package:darkarts/widgets/event_card.dart';
 // import 'package:darkarts/pages/event_detail.dart';
 
 class EventListing extends StatelessWidget {
@@ -35,35 +36,36 @@ class EventListing extends StatelessWidget {
       child: ListView.separated(
       itemBuilder: (BuildContext context, index) {
       Event event = events[index];
-      return Container(
-        color: Colors.white30,
-        child: ListTile(
-          leading: CircleAvatar(
-            child: Image.network(
-               event.eventName,
-            ),
-            radius: 30.0,
-            backgroundColor: Colors.blue[50],
-          ),
-          title: Text(
-            event.eventName,
-            style: TextStyle(fontSize: 22.0, color: Colors.black),
-          ),
-          subtitle: Text(
-             "Date: " + event.eventName.toString(),
-            style: TextStyle(fontSize: 16.0, color: Colors.black87),
-          ),
-          trailing: IconButton(
-            icon: Icon(Icons.chevron_right),
-             onPressed: () {
-            //    Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //           builder: (context) => EventDetail(event)));
-             },
-          ),
-        ),
-      );
+      return EventCard(event: event);
+      // return Container(
+      //   color: Colors.white30,
+      //   child: ListTile(
+      //     leading: CircleAvatar(
+      //       child: Image.network(
+      //          event.eventName,
+      //       ),
+      //       radius: 30.0,
+      //       backgroundColor: Colors.blue[50],
+      //     ),
+      //     title: Text(
+      //       event.eventName,
+      //       style: TextStyle(fontSize: 22.0, color: Colors.black),
+      //     ),
+      //     subtitle: Text(
+      //        "Date: " + event.eventName.toString(),
+      //       style: TextStyle(fontSize: 16.0, color: Colors.black87),
+      //     ),
+      //     trailing: IconButton(
+      //       icon: Icon(Icons.chevron_right),
+      //        onPressed: () {
+      //       //    Navigator.push(
+      //       //       context,
+      //       //       MaterialPageRoute(
+      //       //           builder: (context) => EventDetail(event)));
+      //        },
+      //     ),
+      //   ),
+      // );
     },
     separatorBuilder: (BuildContext context, index) {
       return Divider(

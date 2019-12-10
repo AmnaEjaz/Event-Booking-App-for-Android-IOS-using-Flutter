@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _eventListingBloc=EventListingBloc(eventRepository: widget.eventRepository);
     _eventListingBloc.add(GetAllEventsEvent());
-
   }
   @override
   void dispose() {
@@ -35,16 +34,17 @@ class _HomePageState extends State<HomePage> {
     return BlocProvider(
           create: (BuildContext context)=>_eventListingBloc,
           child: Scaffold(
-          backgroundColor: Colors.blue[900],
+          backgroundColor: Colors.white,
         appBar: AppBar(
+          centerTitle: true, 
           elevation: 0.0,
-          title: Text('Football Events',style: TextStyle(color: Colors.white,fontSize: 30.0,),),
+          title: Image.asset('images/na-logo.png', fit: BoxFit.cover),
           backgroundColor: Colors.transparent,
         ),
          body: Column(
            children: <Widget>[
-             SizedBox(height: 20.0,),
-             SizedBox(height: 20.0,),
+             SizedBox(height: 10.0,),
+             SizedBox(height: 10.0,),
              EventListing(),
            ],
          ),

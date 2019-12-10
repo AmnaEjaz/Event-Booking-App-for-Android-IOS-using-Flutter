@@ -34,7 +34,6 @@ class EventListingBloc extends Bloc<EventListingEvent, EventListingState> {
         if (events.length == 0) {
           yield EventEmptyState();
         } else {
-          print(events);
           yield EventFetchedState(events: events);
 
         }
