@@ -5,7 +5,6 @@ import 'package:darkarts/bloc/nat_event_events.dart';
 import 'package:darkarts/pages/event_listing.dart';
 import 'package:darkarts/services/repository.dart';
 
-
 class HomePage extends StatefulWidget {
   final EventRepository eventRepository;
   HomePage({this.eventRepository});
@@ -14,41 +13,101 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-
   EventListingBloc _eventListingBloc;
+  int _cIndex = 2;
 
+  void _incrementTab(index) {
+    setState(() {
+      _cIndex = index;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    _eventListingBloc=EventListingBloc(eventRepository: widget.eventRepository);
+    _eventListingBloc =
+        EventListingBloc(eventRepository: widget.eventRepository);
     _eventListingBloc.add(GetAllEventsEvent());
   }
+
   @override
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-          create: (BuildContext context)=>_eventListingBloc,
-          child: Scaffold(
-          backgroundColor: Colors.white,
-        appBar: AppBar(
-          centerTitle: true, 
-          elevation: 0.0,
-          title: Image.asset('images/na-logo.png', fit: BoxFit.cover),
-          backgroundColor: Colors.transparent,
-        ),
-         body: Column(
-           children: <Widget>[
-             SizedBox(height: 10.0,),
-             SizedBox(height: 10.0,),
-             EventListing(),
-           ],
-         ),
-      ),
-    );
+        create: (BuildContext context) => _eventListingBloc,
+        child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    'images/na-logo.png',
+                    fit: BoxFit.cover,
+                    height: 52,
+                  )
+                ],
+              ),
+            ),
+            body: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 0.0,
+                ),
+                SizedBox(
+                  height: 0.0,
+                ),
+                EventListing(),
+              ],
+            ),
+            bottomNavigationBar: new Theme(
+                data: Theme.of(context).copyWith(
+                    // sets the background color of the `BottomNavigationBar`
+                    canvasColor: Colors.lightGreen,
+                    // sets the active color of the `BottomNavigationBar` if `Brightness` is light
+                    primaryColor: Colors.red,
+                    textTheme: Theme.of(context).textTheme.copyWith(
+                        caption: new TextStyle(
+                            color: Colors
+                                .yellow))), // sets the inactive color of the `BottomNavigationBar`
+                child: new BottomNavigationBar(
+                  currentIndex: _cIndex,
+                  type: BottomNavigationBarType.shifting,
+                  items: [
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.home,
+                            color: Color.fromARGB(255, 0, 0, 0)),
+                        title: NavbarText('Home')),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.search,
+                            color: Color.fromARGB(255, 0, 0, 0)),
+                        title: NavbarText('Search')),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.calendar_today,
+                        color: Color.fromARGB(255, 0, 0, 0)),
+                        title: NavbarText('Events')),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.account_circle,
+                            color: Color.fromARGB(255, 0, 0, 0)),
+                        title: NavbarText('Account')),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.more_vert,
+                            color: Color.fromARGB(255, 0, 0, 0)),
+                        title: NavbarText('More'))
+                  ],
+                  onTap: (index) {
+                    _incrementTab(index);
+                  },
+                ))));
+  }
+
+  Widget NavbarText(context){
+    return new Text(context, style: TextStyle(
+                                fontFamily: 'Oswald', color: Colors.black));
   }
 }

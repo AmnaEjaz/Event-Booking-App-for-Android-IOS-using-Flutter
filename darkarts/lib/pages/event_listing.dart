@@ -69,7 +69,7 @@ class EventListing extends StatelessWidget {
     },
     separatorBuilder: (BuildContext context, index) {
       return Divider(
-        height: 8.0,
+        height: 5.0,
         color: Colors.transparent,
       );
     },

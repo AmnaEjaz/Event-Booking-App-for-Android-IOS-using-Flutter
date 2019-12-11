@@ -1,5 +1,7 @@
 import 'package:darkarts/models/event_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flip_card/flip_card.dart';
+import 'package:rating_bar/rating_bar.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
@@ -9,88 +11,169 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 350,
+        height: 370,
+        child: FlipCard(
+          direction: FlipDirection.HORIZONTAL, // default
+          front: Container(
+            child: CardFront(context),
+          ),
+          back: Container(
+            child: CardBack(context),
+          ),
+        ));
+  }
+
+  Widget CardFront(BuildContext context) {
+    return Container(
         child: Card(
-          semanticContainer: true,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              FadeInImage(
-                image: NetworkImage(event.paintingImage),
-                height: 250.0,
-                fit: BoxFit.fill,
-                placeholder: AssetImage('images/loading.gif'),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 15,
-                  top: 10,
-                  right: 40,
-                  bottom: 20,
-                ),
-                child: Column(
+      semanticContainer: true,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          FadeInImage(
+            image: NetworkImage(event.paintingImage),
+            height: 250.0,
+            fadeInDuration: Duration(milliseconds: 500),
+            fit: BoxFit.fill,
+            placeholder: AssetImage('images/loading.gif'),
+          ),
+          Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "Feb",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Oswald'),
+                          ),
+                          Text(
+                            "12",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Oswald',
+                                color: Colors.lightGreen),
+                          ),
+                        ]),
+                  ),
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            event.eventName,
-                            softWrap: true,
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Oswald'),
-                          ),
-                          Flexible(
-                            child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: 5.0),
-                              child: Text(
-                                '|',
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            child: Text(
-                              '\$' +
-                                  event.minTicketPrice.toString() +
-                                  '-' +
-                                  event.minTicketPrice.toString(),
-                              style: TextStyle(
-                                  fontFamily: 'Oswald', color: Colors.grey),
-                            ),
-                          ),
-                        ],
+                    children: <Widget>[
+                      Text(
+                        event.eventName,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Oswald'),
                       ),
-
-                        Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            event.eventName,
-                            softWrap: true,
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Oswald'),
-                          ),
-                  
-                        ],
+                      Text(
+                        event.venueName,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 16.0, fontFamily: 'Oswald'),
                       ),
+                      Text(
+                        "7:00 PM",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 16.0, fontFamily: 'Oswald'),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        '\$' +
+                            event.minTicketPrice.toString() ,
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Oswald'),
+                      ),
+                     RaisedButton(
+                        padding: const EdgeInsets.all(8.0),
+                        textColor: Colors.white,
+                        color: Colors.blue,
+                        child: new Text("Buy"),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ]),
+        ],
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      elevation: 5,
+      margin: EdgeInsets.all(10),
+    ));
+  }
 
-                    ]),
+  @override
+  Widget CardBack(BuildContext context) {
+    return Container(
+        child: Card(
+      semanticContainer: true,
+      color: Colors.lightGreen.withOpacity(.8),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: 90.0,
+            backgroundImage: NetworkImage(event.artistImage),
+            backgroundColor: Colors.transparent,
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                event.artistName,
+                softWrap: true,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Oswald'),
+              ),
+              RatingBar.readOnly(
+                initialRating: 3.5,
+                isHalfAllowed: true,
+                halfFilledIcon: Icons.star_half,
+                filledIcon: Icons.star,
+                emptyIcon: Icons.star_border,
+                filledColor: Colors.amberAccent,
+                emptyColor: Colors.amberAccent,
+                halfFilledColor: Colors.amberAccent,
+                size: 28,
               ),
             ],
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          elevation: 5,
-          margin: EdgeInsets.all(10),
-        ));
+        ],
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      elevation: 5,
+      margin: EdgeInsets.all(10),
+    ));
   }
 }
