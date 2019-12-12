@@ -15,15 +15,15 @@ class EventCard extends StatelessWidget {
         child: FlipCard(
           direction: FlipDirection.HORIZONTAL, // default
           front: Container(
-            child: CardFront(context),
+            child: cardFront(context),
           ),
           back: Container(
-            child: CardBack(context),
+            child: cardBack(context),
           ),
         ));
   }
 
-  Widget CardFront(BuildContext context) {
+  Widget cardFront(BuildContext context) {
     return Container(
         child: Card(
       semanticContainer: true,
@@ -42,12 +42,12 @@ class EventCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             "Feb",
@@ -69,9 +69,9 @@ class EventCard extends StatelessWidget {
                         ]),
                   ),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
+                        Text(
                         event.eventName,
                         textAlign: TextAlign.left,
                         style: TextStyle(
@@ -79,34 +79,70 @@ class EventCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Oswald'),
                       ),
+                      // RichText(
+                      //     text: TextSpan(
+                      //       children: [
+                      //         WidgetSpan(
+                      //           child: Icon(Icons.location_on, size: 24, color: Colors.lightGreen,),
+                      //         ),
+                      //         TextSpan(
+                      //           text: event.venueName,
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              
+                              WidgetSpan(
+                                child: Icon(Icons.location_on, size: 24, color: Colors.lightGreen,),
+                              ),
+                              TextSpan(
+                                text:  event.venueName,
+                                  
+                                 style: TextStyle(fontSize: 14.0, fontFamily: 'Oswald', color: Colors.black)
+                              ),
+                            ],
+                          ),
+                        ),
+                    
                       Text(
                         event.venueName,
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 16.0, fontFamily: 'Oswald'),
+                        style: TextStyle(fontSize: 14.0, fontFamily: 'Oswald'),
                       ),
                       Text(
                         "7:00 PM",
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 16.0, fontFamily: 'Oswald'),
+                        style: TextStyle(fontSize: 14.0, fontFamily: 'Oswald'),
                       ),
                     ],
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        '\$' +
-                            event.minTicketPrice.toString() ,
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Oswald'),
+                      Padding(
+                        padding: const EdgeInsets.only(top:12.0),
+                        child: Text(
+                          '\$' + event.minTicketPrice.toString(),
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Oswald'),
+                        ),
                       ),
-                     RaisedButton(
-                        padding: const EdgeInsets.all(8.0),
-                        textColor: Colors.white,
-                        color: Colors.blue,
-                        child: new Text("Buy"),
+                      Padding(
+                        padding: const EdgeInsets.only(top:5.0),
+                        child: new RaisedButton(
+                          onPressed: () {},
+                          textColor: Colors.white,
+                          color: Colors.lightGreen,
+                          padding: const EdgeInsets.all(8.0),
+                          child: new Text(
+                            "Buy",
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -125,7 +161,7 @@ class EventCard extends StatelessWidget {
   }
 
   @override
-  Widget CardBack(BuildContext context) {
+  Widget cardBack(BuildContext context) {
     return Container(
         child: Card(
       semanticContainer: true,
