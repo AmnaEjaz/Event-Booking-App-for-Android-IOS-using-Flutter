@@ -167,7 +167,7 @@ class EventCard extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.yellow,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(5),
                     bottomRight: Radius.circular(5),
                   ) // green shaped
                   ),
