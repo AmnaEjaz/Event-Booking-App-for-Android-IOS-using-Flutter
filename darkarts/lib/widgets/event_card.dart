@@ -2,10 +2,10 @@ import 'package:darkarts/models/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:rating_bar/rating_bar.dart';
+import 'package:intl/intl.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
-
   EventCard({this.event});
 
   @override
@@ -24,6 +24,11 @@ class EventCard extends StatelessWidget {
   }
 
   Widget cardFront(BuildContext context) {
+    var parsedDate = DateTime.parse(event.eventDate);
+
+    var eventMonth = new DateFormat("MMM").format(parsedDate);
+    var eventDate = new DateFormat("d").format(parsedDate);
+    var eventTime = new DateFormat("KK:mm a").format(parsedDate);
     return Container(
         child: Card(
       semanticContainer: true,
@@ -50,7 +55,7 @@ class EventCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Feb",
+                            eventMonth.toString(),
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 fontSize: 16.0,
@@ -58,7 +63,7 @@ class EventCard extends StatelessWidget {
                                 fontFamily: 'Oswald'),
                           ),
                           Text(
-                            "12",
+                            eventDate.toString(),
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 fontSize: 16.0,
@@ -68,49 +73,58 @@ class EventCard extends StatelessWidget {
                           ),
                         ]),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
+                  SizedBox(
+                    width: 215, // set this
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
                         Text(
-                        event.eventName,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Oswald'),
-                      ),
-                     Padding(
-                       padding: const EdgeInsets.only(top:5.0),
-                       child: Row(
-                        children: <Widget>[
-                          Icon(Icons.location_on,color: Colors.lightGreen,),
-                          Padding(
-                            padding: const EdgeInsets.only(left:4.0),
-                            child: Text(event.venueName,style: TextStyle(fontSize: 14.0, fontFamily: 'Oswald')),
-                          )
-                        ]
+                          event.eventName,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Oswald'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Row(children: <Widget>[
+                            Icon(
+                              Icons.location_on,
+                              color: Colors.lightGreen,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4.0),
+                              child: Text(event.venueName,
+                                  style: TextStyle(
+                                      fontSize: 14.0, fontFamily: 'Oswald')),
+                            )
+                          ]),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 2.0, top: 2),
+                          child: Row(children: <Widget>[
+                            Icon(
+                              Icons.access_time,
+                              color: Colors.lightGreen,
+                              size: 20,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(eventTime.toString(),
+                                  style: TextStyle(
+                                      fontSize: 14.0, fontFamily: 'Oswald')),
+                            )
+                          ]),
+                        ),
+                      ],
                     ),
-                     ),
-                     Padding(
-                       padding: const EdgeInsets.only(left:2.0, top: 2),
-                       child: Row(
-                        children: <Widget>[
-                          Icon(Icons.access_time, color: Colors.lightGreen, size: 20,),
-                          Padding(
-                            padding: const EdgeInsets.only(left:8.0),
-                            child: Text("7:00 PM",style: TextStyle(fontSize: 14.0, fontFamily: 'Oswald')),
-                          )
-                        ]
-                    ),
-                     ),
-                   
-                    ],
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(top:12.0),
+                        padding: const EdgeInsets.only(top: 12.0),
                         child: Text(
                           '\$' + event.minTicketPrice.toString(),
                           style: TextStyle(
@@ -120,7 +134,7 @@ class EventCard extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top:5.0),
+                        padding: const EdgeInsets.only(top: 5.0),
                         child: new RaisedButton(
                           onPressed: () {},
                           textColor: Colors.white,
@@ -133,8 +147,6 @@ class EventCard extends StatelessWidget {
                       ),
                     ],
                   ),
-
-                  
                 ],
               ),
             ),
