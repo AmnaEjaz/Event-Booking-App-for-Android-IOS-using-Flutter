@@ -33,124 +33,176 @@ class EventCard extends StatelessWidget {
         child: Card(
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          FadeInImage(
-            image: NetworkImage(event.paintingImage),
-            height: 250.0,
-            fadeInDuration: Duration(milliseconds: 500),
-            fit: BoxFit.fill,
-            placeholder: AssetImage('images/loading.gif'),
-          ),
-          Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
+      child: Stack(
+        children: <Widget>[
+          Align(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                FadeInImage(
+                  image: NetworkImage(event.paintingImage),
+                  height: 250.0,
+                  fadeInDuration: Duration(milliseconds: 500),
+                  fit: BoxFit.fill,
+                  placeholder: AssetImage('images/loading.gif'),
+                ),
+                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            eventMonth.toString(),
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Oswald'),
-                          ),
-                          Text(
-                            eventDate.toString(),
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Oswald',
-                                color: Colors.lightGreen),
-                          ),
-                        ]),
-                  ),
-                  SizedBox(
-                    width: 215, // set this
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          event.eventName,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Oswald'),
-                        ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 5.0),
-                          child: Row(children: <Widget>[
-                            Icon(
-                              Icons.location_on,
-                              color: Colors.lightGreen,
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  eventMonth.toString(),
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Oswald'),
+                                ),
+                                Text(
+                                  eventDate.toString(),
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Oswald',
+                                      color: Colors.lightGreen),
+                                ),
+                              ]),
+                        ),
+                        SizedBox(
+                          width: 215, // set this
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                event.eventName,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Oswald'),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Row(children: <Widget>[
+                                  Icon(
+                                    Icons.location_on,
+                                    color: Colors.lightGreen,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4.0),
+                                    child: Text(event.venueName,
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontFamily: 'Oswald')),
+                                  )
+                                ]),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 2.0, top: 2),
+                                child: Row(children: <Widget>[
+                                  Icon(
+                                    Icons.access_time,
+                                    color: Colors.lightGreen,
+                                    size: 20,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Text(eventTime.toString(),
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontFamily: 'Oswald')),
+                                  )
+                                ]),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12.0),
+                              child: Text(
+                                '\$' + event.minTicketPrice.toString(),
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Oswald'),
+                              ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 4.0),
-                              child: Text(event.venueName,
-                                  style: TextStyle(
-                                      fontSize: 14.0, fontFamily: 'Oswald')),
-                            )
-                          ]),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 2.0, top: 2),
-                          child: Row(children: <Widget>[
-                            Icon(
-                              Icons.access_time,
-                              color: Colors.lightGreen,
-                              size: 20,
+                              padding: const EdgeInsets.only(top: 5.0),
+                              child: new RaisedButton(
+                                onPressed: () {},
+                                textColor: Colors.white,
+                                color: Colors.lightGreen,
+                                padding: const EdgeInsets.all(8.0),
+                                child: new Text(
+                                  "Buy",
+                                ),
+                              ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(eventTime.toString(),
-                                  style: TextStyle(
-                                      fontSize: 14.0, fontFamily: 'Oswald')),
-                            )
-                          ]),
+                          ],
                         ),
                       ],
                     ),
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 12.0),
-                        child: Text(
-                          '\$' + event.minTicketPrice.toString(),
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Oswald'),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: new RaisedButton(
-                          onPressed: () {},
-                          textColor: Colors.white,
-                          color: Colors.lightGreen,
-                          padding: const EdgeInsets.all(8.0),
-                          child: new Text(
-                            "Buy",
-                          ),
-                        ),
-                      ),
-                    ],
+                ]),
+              ],
+            ),
+          ),
+          Positioned(
+            top: 20,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+              decoration: BoxDecoration(
+                  color: Colors.yellow,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    bottomRight: Radius.circular(5),
+                  ) // green shaped
                   ),
+              child: Text("Featured"),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+              decoration: BoxDecoration(
+                  color: Colors.lightGreen,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(5),
+                  ) // green shaped
+                  ),
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Icon(
+                      Icons.star,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                  Text(
+                    event.paintingRating.toString(),
+                    style: TextStyle(color: Colors.white),
+                  )
                 ],
               ),
             ),
-          ]),
+          )
         ],
       ),
       shape: RoundedRectangleBorder(
