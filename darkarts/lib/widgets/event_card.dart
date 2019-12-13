@@ -79,44 +79,31 @@ class EventCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Oswald'),
                       ),
-                      // RichText(
-                      //     text: TextSpan(
-                      //       children: [
-                      //         WidgetSpan(
-                      //           child: Icon(Icons.location_on, size: 24, color: Colors.lightGreen,),
-                      //         ),
-                      //         TextSpan(
-                      //           text: event.venueName,
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              
-                              WidgetSpan(
-                                child: Icon(Icons.location_on, size: 24, color: Colors.lightGreen,),
-                              ),
-                              TextSpan(
-                                text:  event.venueName,
-                                  
-                                 style: TextStyle(fontSize: 14.0, fontFamily: 'Oswald', color: Colors.black)
-                              ),
-                            ],
-                          ),
-                        ),
-                    
-                      Text(
-                        event.venueName,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 14.0, fontFamily: 'Oswald'),
-                      ),
-                      Text(
-                        "7:00 PM",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 14.0, fontFamily: 'Oswald'),
-                      ),
+                     Padding(
+                       padding: const EdgeInsets.only(top:5.0),
+                       child: Row(
+                        children: <Widget>[
+                          Icon(Icons.location_on,color: Colors.lightGreen,),
+                          Padding(
+                            padding: const EdgeInsets.only(left:4.0),
+                            child: Text(event.venueName,style: TextStyle(fontSize: 14.0, fontFamily: 'Oswald')),
+                          )
+                        ]
+                    ),
+                     ),
+                     Padding(
+                       padding: const EdgeInsets.only(left:2.0, top: 2),
+                       child: Row(
+                        children: <Widget>[
+                          Icon(Icons.access_time, color: Colors.lightGreen, size: 20,),
+                          Padding(
+                            padding: const EdgeInsets.only(left:8.0),
+                            child: Text("7:00 PM",style: TextStyle(fontSize: 14.0, fontFamily: 'Oswald')),
+                          )
+                        ]
+                    ),
+                     ),
+                   
                     ],
                   ),
                   Column(
@@ -146,6 +133,8 @@ class EventCard extends StatelessWidget {
                       ),
                     ],
                   ),
+
+                  
                 ],
               ),
             ),
