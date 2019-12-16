@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:darkarts/bloc/nat_event_states.dart';
-import 'package:darkarts/bloc/nat_event_events.dart';
+import 'package:darkarts/bloc/event_bloc/nat_event_states.dart';
+import 'package:darkarts/bloc/event_bloc/nat_event_events.dart';
 import 'package:darkarts/models/event_model.dart';
 import 'package:darkarts/services/repository.dart';
 

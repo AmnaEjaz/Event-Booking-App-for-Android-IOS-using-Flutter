@@ -18,7 +18,7 @@ class EventCard extends StatelessWidget {
             child: cardFront(context),
           ),
           back: Container(
-            child: cardBack(context),
+            child: CardBack(context),
           ),
         ));
   }
@@ -77,7 +77,7 @@ class EventCard extends StatelessWidget {
                               ]),
                         ),
                         SizedBox(
-                          width: 215, // set this
+                          width: 145, // set this
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -213,8 +213,7 @@ class EventCard extends StatelessWidget {
     ));
   }
 
-  @override
-  Widget cardBack(BuildContext context) {
+  Widget CardBack(BuildContext context) {
     return Container(
         child: Card(
       semanticContainer: true,

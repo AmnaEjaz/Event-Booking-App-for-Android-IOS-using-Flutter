@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:darkarts/bloc/nat_event_bloc.dart';
-import 'package:darkarts/bloc/nat_event_states.dart';
+import 'package:darkarts/bloc/event_bloc/nat_event_bloc.dart';
+import 'package:darkarts/bloc/event_bloc/nat_event_states.dart';
 import 'package:darkarts/models/event_model.dart';
 import 'package:darkarts/widgets/message.dart';
 import 'package:darkarts/widgets/event_card.dart';

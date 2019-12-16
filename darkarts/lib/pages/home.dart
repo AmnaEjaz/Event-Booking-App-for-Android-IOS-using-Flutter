@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:darkarts/bloc/nat_event_bloc.dart';
-import 'package:darkarts/bloc/nat_event_events.dart';
+import 'package:darkarts/bloc/event_bloc/nat_event_bloc.dart';
+import 'package:darkarts/bloc/event_bloc/nat_event_events.dart';
 import 'package:darkarts/pages/event_listing.dart';
 import 'package:darkarts/services/repository.dart';
 
@@ -82,23 +82,23 @@ class _HomePageState extends State<HomePage> {
                     BottomNavigationBarItem(
                         icon: Icon(Icons.home,
                             color: Color.fromARGB(255, 0, 0, 0)),
-                        title: NavbarText('Home')),
+                        title: navbarText('Home')),
                     BottomNavigationBarItem(
                         icon: Icon(Icons.search,
                             color: Color.fromARGB(255, 0, 0, 0)),
-                        title: NavbarText('Search')),
+                        title: navbarText('Search')),
                     BottomNavigationBarItem(
                         icon: Icon(Icons.calendar_today,
                         color: Color.fromARGB(255, 0, 0, 0)),
-                        title: NavbarText('Events')),
+                        title: navbarText('Events')),
                     BottomNavigationBarItem(
                         icon: Icon(Icons.account_circle,
                             color: Color.fromARGB(255, 0, 0, 0)),
-                        title: NavbarText('Account')),
+                        title: navbarText('Account')),
                     BottomNavigationBarItem(
                         icon: Icon(Icons.more_vert,
                             color: Color.fromARGB(255, 0, 0, 0)),
-                        title: NavbarText('More'))
+                        title: navbarText('More'))
                   ],
                   onTap: (index) {
                     _incrementTab(index);
@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                 ))));
   }
 
-  Widget NavbarText(context){
+  Widget navbarText(context){
     return new Text(context, style: TextStyle(
                                 fontFamily: 'Oswald', color: Colors.black));
   }
