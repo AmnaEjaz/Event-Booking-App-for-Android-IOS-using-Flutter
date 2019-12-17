@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:darkarts/services/user_repository.dart';
@@ -16,9 +17,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
       body: BlocProvider(
         create: (context) {
           return LoginBloc(
@@ -30,4 +28,30 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+  //   @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: Stack(
+  //       fit: StackFit.expand,
+  //       children: <Widget>[
+  //         Image.asset("images/background_image.jpg", fit: BoxFit.cover),
+  //         BackdropFilter(
+  //           filter: ui.ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
+  //           child: Container(
+  //             color: Colors.white.withOpacity(0.2),
+  //             child:BlocProvider(
+  //                 create: (context) {
+  //                   return LoginBloc(
+  //                     authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+  //                     userRepository: userRepository,
+  //                   );
+  //                 },
+  //                 child: LoginForm(),
+  //               ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
