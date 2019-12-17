@@ -8,8 +8,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  TextStyle style =
-      TextStyle(fontFamily: 'Montserrat', fontSize: 15.0, color: Colors.black);
+  TextStyle style = TextStyle(fontSize: 15.0, color: Colors.black);
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -70,12 +69,14 @@ class _LoginFormState extends State<LoginForm> {
         // color : Colors.lightGreen,
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
+          padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
           onPressed: state is! LoginLoading ? _onLoginButtonPressed : null,
           child: Text("Login",
               textAlign: TextAlign.center,
               style: style.copyWith(
-                  color: Colors.white, fontWeight: FontWeight.bold)),
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20)),
         ),
       );
       return Scaffold(
@@ -94,13 +95,25 @@ class _LoginFormState extends State<LoginForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    height: 55.0,
-                    child: Image.asset(
-                      "images/na-logo.png",
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  SizedBox(height: 45.0),
+                      height: 55.0,
+                      child: RichText(
+                        text: TextSpan(children: <TextSpan>[
+                          TextSpan(
+                              text: "Nocturnal",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 25)),
+                          TextSpan(
+                            text: ' Arts',
+                            style: TextStyle(
+                                color: Colors.lightGreen, fontSize: 25),
+                          )
+                        ]),
+                        // Image.asset(
+                        //   "images/na-logo.png",
+                        //   fit: BoxFit.contain,
+                        // ),
+                      )),
+                  SizedBox(height: 15.0),
                   emailField,
                   SizedBox(height: 15.0),
                   passwordField,
