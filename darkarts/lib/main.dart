@@ -6,7 +6,6 @@ import 'package:darkarts/bloc/authentication_bloc/authentication.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //pages import
 import './pages/home.dart';
-import 'package:darkarts/bloc/authentication_bloc/authentication.dart';
 import 'package:darkarts/common/splash/splash.dart';
 import 'package:darkarts/bloc/login_bloc/login.dart';
 import 'package:darkarts/common/common.dart';

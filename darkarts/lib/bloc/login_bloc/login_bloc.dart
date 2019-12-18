@@ -34,7 +34,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         authenticationBloc.add(LoggedIn(token: token));
         yield LoginInitial();
       } catch (error) {
-        yield LoginFailure(error: error.toString());
+        yield LoginFailure(error: "Invalid Login Credentials");
       }
     }
   }

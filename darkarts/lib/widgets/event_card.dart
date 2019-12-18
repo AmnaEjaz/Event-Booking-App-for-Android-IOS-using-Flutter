@@ -18,7 +18,7 @@ class EventCard extends StatelessWidget {
             child: cardFront(context),
           ),
           back: Container(
-            child: CardBack(context),
+            child: cardBack(context),
           ),
         ));
   }
@@ -213,7 +213,7 @@ class EventCard extends StatelessWidget {
     ));
   }
 
-  Widget CardBack(BuildContext context) {
+  Widget cardBack(BuildContext context) {
     return Container(
         child: Card(
       semanticContainer: true,

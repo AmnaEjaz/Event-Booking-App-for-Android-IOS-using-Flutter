@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 class UserRepository {
@@ -7,8 +8,14 @@ class UserRepository {
     @required String username,
     @required String password,
   }) async {
-    await Future.delayed(Duration(seconds: 1));
+    if(username == "amna" && password == "123"){
+       await Future.delayed(Duration(seconds: 1), ()=>{});
     return 'token';
+    }
+    else{
+      throw Error();
+    }
+   
   }
 
   Future<void> deleteToken() async {
