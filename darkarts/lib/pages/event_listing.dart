@@ -6,6 +6,8 @@ import 'package:darkarts/models/event_model.dart';
 import 'package:darkarts/widgets/message.dart';
 import 'package:darkarts/widgets/event_card.dart';
 // import 'package:darkarts/pages/event_detail.dart';
+import 'package:darkarts/widgets/web_view.dart';
+
 
 class EventListing extends StatelessWidget {
   @override
@@ -36,6 +38,21 @@ class EventListing extends StatelessWidget {
       child: ListView.separated(
       itemBuilder: (BuildContext context, index) {
       Event event = events[index];
+      // return RaisedButton(
+      //                           onPressed: () {
+      //                               Navigator.of(context).push(MaterialPageRoute(
+      //                                 builder: (BuildContext context) => MyWebView(
+      //                                       title: "Alligator.io",
+      //                                       selectedUrl: "https://alligator.io",
+      //                                     )));
+      //                           },
+      //                           textColor: Colors.white,
+      //                           color: Colors.lightGreen,
+      //                           padding: const EdgeInsets.all(8.0),
+      //                           child: new Text(
+      //                             "Buy",
+      //                           ),
+      //                         );
       return EventCard(event: event);
       // return Container(
       //   color: Colors.white30,

@@ -31,16 +31,13 @@
 //   }
 // }
 
-
 import 'dart:convert';
 import "dart:async";
 import 'package:darkarts/models/event_model.dart';
 import 'package:http/http.dart' as http;
 
 class EventsApiProvider {
-  String baseUrl = "https://www.easports.com/fifa/ultimate-team/api/fut/item?";
   final successCode = 200;
-
   //for Http calls
   // Future<List<Events>> fetchEventsById(String countryId) async {
   //   final response = await http.get(baseUrl + "country=" + countryId);
@@ -65,9 +62,10 @@ class EventsApiProvider {
   //   }
   // }
 
-  Future<List<Event>> getAllEvents() async{
-    final response = await http.get("http://172.17.40.196:6073/api/FeaturedEvents");
-    return parseResponse(response); 
+  Future<List<Event>> getAllEvents() async {
+    final response =
+        await http.get("http://172.17.40.196:6073/api/FeaturedEvents");
+    return parseResponse(response);
     // return Future.delayed(Duration(seconds: 0), () => parseArray(mockEvents));
   }
 
@@ -83,12 +81,7 @@ class EventsApiProvider {
     // response.
 
     if (response.statusCode == successCode) {
-      print(responseString);
-      responseString["data"].forEach((v) => {
-
-        events.add(Event.fromJson(v))
-        
-        });
+      responseString["data"].forEach((v) => {events.add(Event.fromJson(v))});
       return events;
       // return Event.fromJson(responseString).data;
     } else {

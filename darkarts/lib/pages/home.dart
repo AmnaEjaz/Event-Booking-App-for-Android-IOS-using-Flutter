@@ -84,12 +84,13 @@ class _HomePageState extends State<HomePage> {
                             color: Color.fromARGB(255, 0, 0, 0)),
                         title: navbarText('Home')),
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.search,
-                            color: Color.fromARGB(255, 0, 0, 0)),
-                        title: navbarText('Search')),
+                      icon: Icon(Icons.search,
+                          color: Color.fromARGB(255, 0, 0, 0)),
+                      title: navbarText('Search'),
+                    ),
                     BottomNavigationBarItem(
                         icon: Icon(Icons.calendar_today,
-                        color: Color.fromARGB(255, 0, 0, 0)),
+                            color: Color.fromARGB(255, 0, 0, 0)),
                         title: navbarText('Events')),
                     BottomNavigationBarItem(
                         icon: Icon(Icons.account_circle,
@@ -106,8 +107,8 @@ class _HomePageState extends State<HomePage> {
                 ))));
   }
 
-  Widget navbarText(context){
-    return new Text(context, style: TextStyle(
-                                fontFamily: 'Oswald', color: Colors.black));
+  Widget navbarText(context) {
+    return new Text(context,
+        style: TextStyle(fontFamily: 'Oswald', color: Colors.black));
   }
 }

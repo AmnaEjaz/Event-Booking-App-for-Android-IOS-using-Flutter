@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
+  GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
   EventCard({this.event});
 
   @override
@@ -13,12 +14,18 @@ class EventCard extends StatelessWidget {
     return Container(
         height: 370,
         child: FlipCard(
+          key: cardKey,
+          flipOnTouch: false,
           direction: FlipDirection.HORIZONTAL, // default
           front: Container(
             child: cardFront(context),
           ),
           back: Container(
-            child: cardBack(context),
+            child:
+            GestureDetector(
+                onTap: () => cardKey.currentState.toggleCard(),
+                child: cardBack(context),
+              ) 
           ),
         ));
   }
@@ -39,13 +46,17 @@ class EventCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                FadeInImage(
+                GestureDetector(
+                onTap: () => cardKey.currentState.toggleCard(),
+                child: FadeInImage(
                   image: NetworkImage(event.paintingImage),
                   height: 250.0,
                   fadeInDuration: Duration(milliseconds: 500),
                   fit: BoxFit.fill,
                   placeholder: AssetImage('images/loading.gif'),
                 ),
+              )
+                ,
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -142,7 +153,7 @@ class EventCard extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 5.0),
                               child: new RaisedButton(
-                                onPressed: () {},
+                                onPressed: () => cardKey.currentState.toggleCard(),
                                 textColor: Colors.white,
                                 color: Colors.lightGreen,
                                 padding: const EdgeInsets.all(8.0),
