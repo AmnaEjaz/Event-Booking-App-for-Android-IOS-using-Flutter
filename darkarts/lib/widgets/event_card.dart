@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:darkarts/widgets/web_view.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
@@ -153,7 +154,13 @@ class EventCard extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 5.0),
                               child: new RaisedButton(
-                                onPressed: () => cardKey.currentState.toggleCard(),
+                                onPressed: () {
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (BuildContext context) => MyWebView(
+                                            title: event.eventName,
+                                            eventId: event.eventId.toString(),
+                                          )));
+                                },
                                 textColor: Colors.white,
                                 color: Colors.lightGreen,
                                 padding: const EdgeInsets.all(8.0),

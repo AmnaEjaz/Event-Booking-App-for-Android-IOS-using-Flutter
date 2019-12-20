@@ -6,7 +6,7 @@ import 'package:darkarts/models/event_model.dart';
 import 'package:darkarts/widgets/message.dart';
 import 'package:darkarts/widgets/event_card.dart';
 // import 'package:darkarts/pages/event_detail.dart';
-import 'package:darkarts/widgets/web_view.dart';
+
 
 
 class EventListing extends StatelessWidget {
