@@ -38,42 +38,23 @@ import 'package:http/http.dart' as http;
 
 class EventsApiProvider {
   final successCode = 200;
-  //for Http calls
-  // Future<List<Events>> fetchEventsById(String countryId) async {
-  //   final response = await http.get(baseUrl + "country=" + countryId);
 
+  //for office
+  // Future<List<Event>> getAllEvents() async {
+  //   final response =
+  //       await http.get("http://172.17.40.196:6073/api/FeaturedEvents");
   //   return parseResponse(response);
+  //   // return Future.delayed(Duration(seconds: 0), () => parseArray(mockEvents));
   // }
 
-  // Future<List<Events>> fetchEventsByName(String name) async {
-  //   final response = await http.get(baseUrl+"name="+name);
 
-  //   return parseResponse(response);
-  // }
-
-  //for http calls
-  // List<Event> parseResponse(http.Response response) {
-  //   final responseString = jsonDecode(response.body);
-
-  //   if (response.statusCode == successCode) {
-  //     return GetEvents.fromJson(responseString).event;
-  //   } else {
-  //     throw Exception('failed to load players');
-  //   }
-  // }
-
-  Future<List<Event>> getAllEvents() async {
-    final response =
-        await http.get("http://172.17.40.196:6073/api/FeaturedEvents");
-    return parseResponse(response);
-    // return Future.delayed(Duration(seconds: 0), () => parseArray(mockEvents));
+// for home
+    Future<List<Event>> getAllEvents() async {
+     return Future.delayed(Duration(seconds: 0), () => parseArray(mockEvents));
   }
 
-// Future<List<Event>> getEventByEventCode(String eventCode) {
-//   return Future.delayed(Duration(seconds: 4),
 
-//   );
-// }
+
 
   List<Event> parseResponse(http.Response response) {
     final responseString = jsonDecode(response.body);
@@ -89,18 +70,15 @@ class EventsApiProvider {
     }
   }
 
-  // List<Event> parseArray(obj) {
-  //   // final responseString = jsonDecode(obj);
-
-  //   var events = new List<Event>();
-
-  //   if (obj.data != null) {
-  //     obj.data.forEach((v) => {events.add(Event.fromJson(v))});
-  //     return events;
-  //   } else {
-  //     throw Exception('Empty');
-  //   }
-  // }
+  List<Event> parseArray(obj) {
+    var events = new List<Event>();
+    if (obj != null) {
+      obj.forEach((v) => {events.add(Event.fromJson(v))});
+      return events;
+    } else {
+      throw Exception('Empty');
+    }
+  }
 }
 
 // var eventsmock = new GetEvents.fromJson(test);

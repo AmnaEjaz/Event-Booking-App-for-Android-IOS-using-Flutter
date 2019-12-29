@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:darkarts/bloc/event_bloc/nat_event_bloc.dart';
 import 'package:darkarts/bloc/event_bloc/nat_event_events.dart';
 import 'package:darkarts/pages/event_listing.dart';
-import 'package:darkarts/services/repository.dart';
+import 'package:darkarts/services/event_repository.dart';
 
 class HomePage extends StatefulWidget {
   final EventRepository eventRepository;

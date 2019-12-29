@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
@@ -6,9 +5,8 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 class MyWebView extends StatelessWidget {
 final String title;
 final String eventId;
-  final String eventDetailUrl = "http://172.17.40.196:6070/event/detail/";
-  final flutterWebviewPlugin = new FlutterWebviewPlugin();
-      StreamSubscription<WebViewStateChanged> _onchanged;
+final String eventDetailUrl = "http://172.17.40.196:6070/event/detail/";
+final flutterWebviewPlugin = new FlutterWebviewPlugin();
       
 
   MyWebView({
@@ -26,30 +24,19 @@ final String eventId;
       }
     });
   
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-          backgroundColor: Colors.lightGreen,
-        ),
-        body:
-
-        new WebviewScaffold(
+    return WebviewScaffold(
       url: eventDetailUrl+eventId,
       withZoom: true,
       withLocalStorage: true,
       hidden: true,
-      
-      
       initialChild: Container(
         color: Colors.white,
         child: Center(child: Image.asset('images/loading.gif'))
       ),
-      
-      
-    )
-    
-    
     );
+    
+    
+    
 
         //  WebView(
         //   initialUrl: eventDetailUrl+eventId,

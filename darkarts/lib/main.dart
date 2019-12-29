@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:darkarts/services/repository.dart';
+import 'package:darkarts/services/event_repository.dart';
 import 'package:darkarts/services/user_repository.dart';
 import 'package:darkarts/bloc/authentication_bloc/authentication.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

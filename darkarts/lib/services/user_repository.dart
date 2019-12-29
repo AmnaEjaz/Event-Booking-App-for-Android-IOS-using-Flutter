@@ -1,24 +1,37 @@
 import 'dart:async';
 
+import 'package:darkarts/models/user_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:darkarts/services/user_authentication_api_provider.dart';
 
 class UserRepository {
-  Future<String> authenticate({
+  UserApiProvider _userApiProvider = UserApiProvider();
+  String token;
+
+  Future<String> userlogin({
     @required String username,
     @required String password,
   }) async {
-    if (username == "amna" && password == "123") {
-      await Future.delayed(Duration(seconds: 1), () => {});
-      return 'token';
-    } else {
-      throw Error();
-    }
+    token = await _userApiProvider.userLogin(username,password);
+    print("here is token $token");
+    await addStringToSP(token);
+    return token;
   }
+
+  // async {
+  //   if (username == "amna" && password == "123") {
+  //     await Future.delayed(Duration(seconds: 1), () => {});
+  //     return 'token';
+  //   } else {
+  //     throw Error();
+  //   }
+  // }
 
   Future<void> deleteToken() async {
     /// delete from keystore/keychain
-    await Future.delayed(Duration(seconds: 1));
+    removeValuesSP();
     return;
   }
 
@@ -28,9 +41,32 @@ class UserRepository {
     return;
   }
 
-  Future<bool> hasToken() async {
+  Future<bool> hasToken()  async{
     /// read from keystore/keychain
-    await Future.delayed(Duration(seconds: 1));
-    return false;
+
+    return await getStringValuesSP();
+
+  }
+
+  addStringToSP(token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', token.toString());
+    return;
+  }
+
+  getStringValuesSP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var check = prefs.getString('token');
+    if (check != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  removeValuesSP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("token");
+    return;
   }
 }
