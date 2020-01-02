@@ -30,6 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           username: event.username,
           password: event.password,
         );
+        print("--------> $token");
 
         authenticationBloc.add(LoggedIn(token: token));
         yield LoginInitial();

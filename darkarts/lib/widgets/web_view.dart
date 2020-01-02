@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyWebView extends StatelessWidget {
 final String title;
@@ -16,27 +16,36 @@ final flutterWebviewPlugin = new FlutterWebviewPlugin();
 
   @override
   Widget build(BuildContext context) {
-
-    flutterWebviewPlugin.onStateChanged.listen((viewState) async {
-      if (viewState.type == WebViewState.finishLoad) {
-       final res =  flutterWebviewPlugin.evalJavascript("(function() { try { window.localStorage.setItem('token', 'SOMETOKEN'); } catch (err) { return err; } })();");
+    bool runOnce = false;
+    bool reloadOnce = false;
+    var token  = getStringValuesSP();
+      flutterWebviewPlugin.onStateChanged.listen((viewState) async {
+      if (viewState.type == WebViewState.finishLoad ) {
+       print("---> $WebViewState.values");
+      final res = await flutterWebviewPlugin.evalJavascript("(function() { try {  window.localStorage.setItem('token', '$token');}  catch (err) { return err; } })();");
+      runOnce = true;
       print("Eval result: $res");
       }
+      // if(viewState.type == WebViewState.finishLoad && reloadOnce == false){
+      //    await flutterWebviewPlugin.reload();
+      //     reloadOnce = true;
+      // }
     });
-  
-    return WebviewScaffold(
+    return 
+    WebviewScaffold(
+      appBar: new AppBar(
+        title: Text(title),
+        backgroundColor: Colors.lightGreen,
+      ),
       url: eventDetailUrl+eventId,
       withZoom: true,
       withLocalStorage: true,
-      hidden: true,
+      withJavascript: true,
       initialChild: Container(
         color: Colors.white,
         child: Center(child: Image.asset('images/loading.gif'))
       ),
     );
-    
-    
-    
 
         //  WebView(
         //   initialUrl: eventDetailUrl+eventId,
@@ -46,6 +55,12 @@ final flutterWebviewPlugin = new FlutterWebviewPlugin();
         //   },
         //   // onPageFinished: _handleLoad,
         // ));
+  }
+    getStringValuesSP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+     var token = prefs.getString('token');
+     print(" ---> $token");
+     return token;
   }
 }
 

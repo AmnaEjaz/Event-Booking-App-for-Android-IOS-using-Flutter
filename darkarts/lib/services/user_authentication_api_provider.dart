@@ -1,7 +1,9 @@
 // import 'dart:convert';
 
 // import 'package:flutter_bloc_example/models/api_models.dart';
-// import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 // class PlayerApiProvider {
 
@@ -32,7 +34,6 @@
 // }
 
 import "dart:async";
-import 'package:darkarts/models/user_model.dart';
 
 class UserApiProvider {
   final successCode = 200;
@@ -45,25 +46,39 @@ class UserApiProvider {
   //   // return Future.delayed(Duration(seconds: 0), () => parseArray(mockEvents));
   // }
 
-
-// for home
-    Future<String> userLogin(String username, String password) async {
-     return Future.delayed(Duration(seconds: 0), () => mockUser.toString());
+  //for office
+      Future<String> userLogin(String username, String password) async {
+      var params = {
+      "username": username,
+      "password": password
+    };
+    Uri uri = Uri.parse("http://172.17.40.196:6079/api/Token");
+    final newURI = uri.replace(queryParameters: params);
+       final response =
+        await http.post(newURI,body: json.encode(params));
+        return parseResponse(response);
   }
 
 
 
-
-  // AuthModel parseResponse(http.Response response) {
-  //   final responseString = jsonDecode(response.body);
-  //   var events = new List<Event>();
-  //   if (response.statusCode == successCode) {
-  //     responseString["data"].forEach((v) => {events.add(Event.fromJson(v))});
-  //     return events;
-  //   } else {
-  //     throw Exception('failed to load events');
-  //   }
+// for home
+  //   Future<String> userLogin(String username, String password) async {
+  //    return Future.delayed(Duration(seconds: 0), () => mockUser.toString());
   // }
+
+
+
+
+  String parseResponse(http.Response response) {
+    final responseString = jsonDecode(response.body);
+    if (response.statusCode == successCode) {
+      print(responseString["data"]);
+      String json = jsonEncode(responseString["data"]);
+      return json;
+    } else {
+      throw Exception('failed to load events');
+    }
+  }
 
 //  <AuthModel> parseMockResponse(obj) {
 //     if (obj != null) {

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:darkarts/models/user_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,15 +7,14 @@ import 'package:darkarts/services/user_authentication_api_provider.dart';
 
 class UserRepository {
   UserApiProvider _userApiProvider = UserApiProvider();
-  String token;
 
   Future<String> userlogin({
     @required String username,
     @required String password,
   }) async {
-    token = await _userApiProvider.userLogin(username,password);
+    String token = await _userApiProvider.userLogin(username,password);
     print("here is token $token");
-    await addStringToSP(token);
+    addStringToSP(token);
     return token;
   }
 
@@ -31,7 +29,7 @@ class UserRepository {
 
   Future<void> deleteToken() async {
     /// delete from keystore/keychain
-    removeValuesSP();
+   await removeValuesSP();
     return;
   }
 
@@ -43,6 +41,7 @@ class UserRepository {
 
   Future<bool> hasToken()  async{
     /// read from keystore/keychain
+    await removeValuesSP();
 
     return await getStringValuesSP();
 

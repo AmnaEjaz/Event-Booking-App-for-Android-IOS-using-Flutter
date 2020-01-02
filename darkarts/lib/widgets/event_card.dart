@@ -5,10 +5,21 @@ import 'package:rating_bar/rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:darkarts/widgets/web_view.dart';
 
-class EventCard extends StatelessWidget {
+class EventCard extends StatefulWidget {
   final Event event;
-  GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
+
   EventCard({this.event});
+
+  @override
+  _EventCardState createState() => _EventCardState();
+}
+
+class _EventCardState extends State<EventCard> {
+  bool liked = false;
+
+  var check;
+
+  GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +43,7 @@ class EventCard extends StatelessWidget {
   }
 
   Widget cardFront(BuildContext context) {
-    var parsedDate = DateTime.parse(event.eventDate);
+    var parsedDate = DateTime.parse(widget.event.eventDate);
 
     var eventMonth = new DateFormat("MMM").format(parsedDate);
     var eventDate = new DateFormat("d").format(parsedDate);
@@ -50,7 +61,7 @@ class EventCard extends StatelessWidget {
                 GestureDetector(
                 onTap: () => cardKey.currentState.toggleCard(),
                 child: FadeInImage(
-                  image: NetworkImage(event.paintingImage),
+                  image: NetworkImage(widget.event.paintingImage),
                   height: 250.0,
                   fadeInDuration: Duration(milliseconds: 500),
                   fit: BoxFit.fill,
@@ -94,7 +105,7 @@ class EventCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                event.eventName,
+                                widget.event.eventName,
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     fontSize: 16.0,
@@ -110,7 +121,7 @@ class EventCard extends StatelessWidget {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 4.0),
-                                    child: Text(event.venueName,
+                                    child: Text(widget.event.venueName,
                                         style: TextStyle(
                                             fontSize: 14.0,
                                             fontFamily: 'Oswald')),
@@ -144,7 +155,7 @@ class EventCard extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 12.0),
                               child: Text(
-                                '\$' + event.minTicketPrice.toString(),
+                                '\$' + widget.event.minTicketPrice.toString(),
                                 style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold,
@@ -157,8 +168,8 @@ class EventCard extends StatelessWidget {
                                 onPressed: () {
                                     Navigator.of(context).push(MaterialPageRoute(
                                       builder: (BuildContext context) => MyWebView(
-                                            title: event.eventName,
-                                            eventId: event.eventId.toString(),
+                                            title: widget.event.eventName,
+                                            eventId: widget.event.eventId.toString(),
                                           )));
                                 },
                                 textColor: Colors.white,
@@ -214,10 +225,34 @@ class EventCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    event.paintingRating.toString(),
+                    widget.event.paintingRating.toString(),
                     style: TextStyle(color: Colors.white),
                   )
                 ],
+              ),
+            ),
+          ),
+        Positioned(
+            top: 50,
+            right: 0,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 1, horizontal: 3),
+              decoration: BoxDecoration(
+                  color: Colors.lightGreen,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(5),
+                    topLeft: Radius.circular(5)
+                  ) // green shaped
+                  ),
+              child: 
+              IconButton(
+                icon: Icon(Icons.favorite),
+                color: liked == true? Colors.red: Colors.white,
+                onPressed: () {
+                   setState(() {
+                      liked = !liked;
+                    });
+                },
               ),
             ),
           )
@@ -242,7 +277,7 @@ class EventCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 90.0,
-            backgroundImage: NetworkImage(event.artistImage),
+            backgroundImage: NetworkImage(widget.event.artistImage),
             backgroundColor: Colors.transparent,
           ),
           SizedBox(
@@ -252,7 +287,7 @@ class EventCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                event.artistName,
+                widget.event.artistName,
                 softWrap: true,
                 textAlign: TextAlign.center,
                 style: TextStyle(
