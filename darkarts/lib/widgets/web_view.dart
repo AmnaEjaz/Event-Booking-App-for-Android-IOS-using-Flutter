@@ -21,10 +21,8 @@ final flutterWebviewPlugin = new FlutterWebviewPlugin();
     var token  = getStringValuesSP();
       flutterWebviewPlugin.onStateChanged.listen((viewState) async {
       if (viewState.type == WebViewState.finishLoad ) {
-       print("---> $WebViewState.values");
       final res = await flutterWebviewPlugin.evalJavascript("(function() { try {  window.localStorage.setItem('token', '$token');}  catch (err) { return err; } })();");
       runOnce = true;
-      print("Eval result: $res");
       }
       // if(viewState.type == WebViewState.finishLoad && reloadOnce == false){
       //    await flutterWebviewPlugin.reload();

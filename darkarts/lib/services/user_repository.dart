@@ -7,12 +7,13 @@ import 'package:darkarts/services/user_authentication_api_provider.dart';
 
 class UserRepository {
   UserApiProvider _userApiProvider = UserApiProvider();
+  String token;
 
   Future<String> userlogin({
     @required String username,
     @required String password,
   }) async {
-    String token = await _userApiProvider.userLogin(username,password);
+    token = await _userApiProvider.userLogin(username,password);
     print("here is token $token");
     addStringToSP(token);
     return token;
@@ -41,10 +42,14 @@ class UserRepository {
 
   Future<bool> hasToken()  async{
     /// read from keystore/keychain
-    await removeValuesSP();
-
-    return await getStringValuesSP();
-
+    // await removeValuesSP();
+    var token = await getStringValuesSP();
+     if (token !=null  && token.isNotEmpty){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   addStringToSP(token) async {
@@ -55,11 +60,9 @@ class UserRepository {
 
   getStringValuesSP() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var check = prefs.getString('token');
-    if (check != null) {
-      return true;
-    } else {
-      return false;
+    var token = prefs.getString('token');
+    if (token !=null  && token.isNotEmpty){
+      return token;
     }
   }
 

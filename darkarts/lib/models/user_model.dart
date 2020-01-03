@@ -1,20 +1,14 @@
-class AuthModel {
-  String token;
-  String refreshToken;
+class UserModel {
   User user;
 
-  AuthModel({this.token, this.refreshToken, this.user});
+  UserModel({this.user});
 
-  AuthModel.fromJson(Map<String, dynamic> json) {
-    token = json['Token'];
-    refreshToken = json['RefreshToken'];
+  UserModel.fromJson(Map<String, dynamic> json) {
     user = json['User'] != null ? new User.fromJson(json['User']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Token'] = this.token;
-    data['RefreshToken'] = this.refreshToken;
     if (this.user != null) {
       data['User'] = this.user.toJson();
     }
@@ -27,9 +21,9 @@ class User {
   int tenantId;
   Null parentUserId;
   String userName;
-  Null phoneNumber;
+  String phoneNumber;
   String email;
-  Null phoneVerified;
+  bool phoneVerified;
   bool emailVerified;
   String firstName;
   Null middleName;

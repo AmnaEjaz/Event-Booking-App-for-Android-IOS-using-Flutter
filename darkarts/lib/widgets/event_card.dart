@@ -1,25 +1,61 @@
+import 'dart:convert';
+
+import 'package:darkarts/bloc/event_bloc/nat_event_bloc.dart';
+import 'package:darkarts/bloc/event_bloc/nat_event_states.dart';
 import 'package:darkarts/models/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:darkarts/widgets/web_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:darkarts/models/user_model.dart';
+import 'package:darkarts/bloc/event_bloc/nat_event_events.dart';
 
 class EventCard extends StatefulWidget {
   final Event event;
 
   EventCard({this.event});
+  getStringValuesSP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    if (token !=null  && token.isNotEmpty){
+      return token;
+    }
+  }
+@override
+
 
   @override
   _EventCardState createState() => _EventCardState();
 }
 
 class _EventCardState extends State<EventCard> {
-  bool liked = false;
-
-  var check;
-
   GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
+  SharedPreferences sharedPrefs;
+  var user;
+    void initState() {
+      super.initState();
+      SharedPreferences.getInstance().then((prefs) {
+        setState(() => {
+          setState(() => sharedPrefs = prefs)
+        });
+      final Map<String, dynamic> tokenjson = json.decode(sharedPrefs.getString('token'));
+       user =  User.fromJson(tokenjson['User']) ;
+      print(user);
+      });
+    }
+    _likeButtonPressed() {
+        BlocProvider.of<EventListingBloc>(context).add(
+          ToggleEventLike(
+            eventCode: widget.event.eventCode,
+            customerId: user.referenceId,
+          ),
+        );
+      }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -33,23 +69,63 @@ class _EventCardState extends State<EventCard> {
             child: cardFront(context),
           ),
           back: Container(
-            child:
-            GestureDetector(
-                onTap: () => cardKey.currentState.toggleCard(),
-                child: cardBack(context),
-              ) 
-          ),
+              child: GestureDetector(
+            onTap: () => cardKey.currentState.toggleCard(),
+            child: cardBack(context),
+          )),
         ));
   }
 
   Widget cardFront(BuildContext context) {
     var parsedDate = DateTime.parse(widget.event.eventDate);
-
     var eventMonth = new DateFormat("MMM").format(parsedDate);
     var eventDate = new DateFormat("d").format(parsedDate);
     var eventTime = new DateFormat("KK:mm a").format(parsedDate);
-    return Container(
-        child: Card(
+
+    bool liked = false;
+
+    return 
+    // BlocListener<EventListingBloc, EventListingState>(
+    //     listener: (context, state) {
+    //       if (state is Success) {
+    //         Scaffold.of(context).showSnackBar(
+    //           SnackBar(
+    //             backgroundColor: Colors.green,
+    //             content: Text('Success'),
+    //           ),
+    //         );
+    //       }
+    //     },
+      //   child: BlocBuilder<DataBloc, DataState>(
+      //     builder: (context, state) {
+      //       if (state is Initial) {
+      //         return Center(child: Text('Press the Button'));
+      //       }
+      //       if (state is Loading) {
+      //         return Center(child: CircularProgressIndicator());
+      //       }
+      //       if (state is Success) {
+      //         return Center(child: Text('Success'));
+      //       }
+      //     },
+      //   ),
+      // );
+    
+     Container(
+        child:     
+        BlocListener<EventListingBloc, EventListingState>(
+        listener: (context, state) {
+          if (state is EventLikeToggledState) {
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.green,
+                content: Text('Success'),
+              ),
+            );
+            liked = true;
+          }
+        },
+      child:  Card(
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Stack(
@@ -59,16 +135,15 @@ class _EventCardState extends State<EventCard> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 GestureDetector(
-                onTap: () => cardKey.currentState.toggleCard(),
-                child: FadeInImage(
-                  image: NetworkImage(widget.event.paintingImage),
-                  height: 250.0,
-                  fadeInDuration: Duration(milliseconds: 500),
-                  fit: BoxFit.fill,
-                  placeholder: AssetImage('images/loading.gif'),
+                  onTap: () => cardKey.currentState.toggleCard(),
+                  child: FadeInImage(
+                    image: NetworkImage(widget.event.paintingImage),
+                    height: 250.0,
+                    fadeInDuration: Duration(milliseconds: 500),
+                    fit: BoxFit.fill,
+                    placeholder: AssetImage('images/loading.gif'),
+                  ),
                 ),
-              )
-                ,
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -166,10 +241,12 @@ class _EventCardState extends State<EventCard> {
                               padding: const EdgeInsets.only(top: 5.0),
                               child: new RaisedButton(
                                 onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) => MyWebView(
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          MyWebView(
                                             title: widget.event.eventName,
-                                            eventId: widget.event.eventId.toString(),
+                                            eventId:
+                                                widget.event.eventId.toString(),
                                           )));
                                 },
                                 textColor: Colors.white,
@@ -232,7 +309,7 @@ class _EventCardState extends State<EventCard> {
               ),
             ),
           ),
-        Positioned(
+          Positioned(
             top: 50,
             right: 0,
             child: Container(
@@ -240,19 +317,18 @@ class _EventCardState extends State<EventCard> {
               decoration: BoxDecoration(
                   color: Colors.lightGreen,
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    topLeft: Radius.circular(5)
-                  ) // green shaped
+                      bottomLeft: Radius.circular(5),
+                      topLeft: Radius.circular(5)) // green shaped
                   ),
-              child: 
-              IconButton(
+              child: IconButton(
                 icon: Icon(Icons.favorite),
-                color: liked == true? Colors.red: Colors.white,
-                onPressed: () {
-                   setState(() {
-                      liked = !liked;
-                    });
-                },
+                color: liked == true ? Colors.red : Colors.white,
+                onPressed: () => _likeButtonPressed()
+                // {
+                //   setState(() {
+                //     liked = !liked;
+                //   });
+                // },
               ),
             ),
           )
@@ -263,7 +339,7 @@ class _EventCardState extends State<EventCard> {
       ),
       elevation: 5,
       margin: EdgeInsets.all(10),
-    ));
+    )));
   }
 
   Widget cardBack(BuildContext context) {

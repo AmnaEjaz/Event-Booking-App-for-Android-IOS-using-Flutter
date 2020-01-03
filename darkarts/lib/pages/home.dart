@@ -4,10 +4,12 @@ import 'package:darkarts/bloc/event_bloc/nat_event_bloc.dart';
 import 'package:darkarts/bloc/event_bloc/nat_event_events.dart';
 import 'package:darkarts/pages/event_listing.dart';
 import 'package:darkarts/services/event_repository.dart';
+import 'package:darkarts/models/user_model.dart';
 
 class HomePage extends StatefulWidget {
   final EventRepository eventRepository;
-  HomePage({this.eventRepository});
+  final User user;
+  HomePage({this.eventRepository, this.user});
   @override
   _HomePageState createState() => _HomePageState();
 }

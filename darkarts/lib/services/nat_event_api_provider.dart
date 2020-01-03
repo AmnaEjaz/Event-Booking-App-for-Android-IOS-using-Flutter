@@ -46,15 +46,31 @@ class EventsApiProvider {
   //   return parseResponse(response);
   //   // return Future.delayed(Duration(seconds: 0), () => parseArray(mockEvents));
   // }
-
+  //http://172.17.40.196:6072/api/Customer/1/LikeEvent/7/LIKE
 
 // for home
-    Future<List<Event>> getAllEvents() async {
-     return Future.delayed(Duration(seconds: 0), () => parseArray(mockEvents));
+  Future<List<Event>> getAllEvents() async {
+    return Future.delayed(Duration(seconds: 0), () => parseArray(mockEvents));
   }
 
-
-
+  Future<bool> toggleEventLike(String eventCode, int customerId) async {
+    var params = {"EventCode": eventCode, "CustomerId": customerId};
+    Uri uri =
+        Uri.parse("http://172.17.40.196:6072/api/Customer/1/LikeEvent/7/LIKE");
+    final newURI = uri.replace(queryParameters: params);
+    final response = await http.post(newURI, body: json.encode(params));
+    final responseString = jsonDecode(response.body);
+    if (response.statusCode == successCode) {
+      if(responseString["data"] == true){
+      return true;
+      }
+      else{
+        return false;
+      }
+    } else {
+      throw Exception('failed to load events');
+    }
+  }
 
   List<Event> parseResponse(http.Response response) {
     final responseString = jsonDecode(response.body);

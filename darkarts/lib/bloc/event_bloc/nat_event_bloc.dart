@@ -22,6 +22,8 @@ class EventListingBloc extends Bloc<EventListingEvent, EventListingState> {
   Stream<EventListingState> mapEventToState(EventListingEvent event) async* {
      yield EventFetchingState();
       List<Event> events;
+
+      bool liked;
       try {
         // if (event is EventSelectedEvent) {
         //   events = await eventRepository
@@ -31,7 +33,16 @@ class EventListingBloc extends Bloc<EventListingEvent, EventListingState> {
         if (event is GetAllEventsEvent) {
           events = await eventRepository.getAllEvents();
         }
-        if (events.length == 0) {
+        if (event is ToggleEventLike) {
+          liked = await eventRepository.toggleEventLike(eventCode: event.eventCode, customerId: event.customerId);
+        }
+        if(liked == true){
+          yield EventLikeToggledState();
+        }
+        else{
+          yield EventLikeToggledFailedState();
+        }
+        if (events != null && events.length == 0){
           yield EventEmptyState();
         } else {
           yield EventFetchedState(events: events);
