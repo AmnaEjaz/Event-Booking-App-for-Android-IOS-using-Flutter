@@ -33,12 +33,12 @@ class EventListingBloc extends Bloc<EventListingEvent, EventListingState> {
         if (event is GetAllEventsEvent) {
           events = await eventRepository.getAllEvents();
         }
-        if (event is ToggleEventLike) {
-          liked = await eventRepository.toggleEventLike(eventCode: event.eventCode, customerId: event.customerId);
-        }
-        if(liked == true){
-          yield EventLikeToggledState();
-        }
+        // if (event is ToggleEventLike) {
+        //   liked = await eventRepository.toggleEventLike(eventCode: event.eventCode, customerId: event.customerId);
+        // }
+        // if(liked == true){
+        //   yield EventLikeToggledState();
+        // }
         else{
           yield EventLikeToggledFailedState();
         }

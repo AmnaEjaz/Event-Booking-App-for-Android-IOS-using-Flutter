@@ -35,24 +35,33 @@ class _EventCardState extends State<EventCard> {
   GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
   SharedPreferences sharedPrefs;
   var user;
+  bool liked = false;
     void initState() {
       super.initState();
-      SharedPreferences.getInstance().then((prefs) {
-        setState(() => {
-          setState(() => sharedPrefs = prefs)
-        });
-      final Map<String, dynamic> tokenjson = json.decode(sharedPrefs.getString('token'));
-       user =  User.fromJson(tokenjson['User']) ;
-      print(user);
-      });
+      // SharedPreferences.getInstance().then((prefs) {
+      //   setState(() => {
+      //     setState(() => sharedPrefs = prefs)
+      //   });
+      // final Map<String, dynamic> tokenjson = json.decode(sharedPrefs.getString('token'));
+      //  user =  User.fromJson(tokenjson['User']) ;
+      // print(user);
+      // });
     }
+    _pressed() {
+    // This function is required for changing the state.
+    // Whenever this function is called it refresh the page with new value
+    setState((){
+      liked = !liked;
+      print(liked);
+    });
+  }
     _likeButtonPressed() {
-        BlocProvider.of<EventListingBloc>(context).add(
-          ToggleEventLike(
-            eventCode: widget.event.eventCode,
-            customerId: user.referenceId,
-          ),
-        );
+        // BlocProvider.of<EventListingBloc>(context).add(
+        //   ToggleEventLike(
+        //     eventCode: widget.event.eventCode,
+        //     customerId: user==null? 1 : user.referenceId,
+        //   ),
+        // );
       }
 
   
@@ -81,8 +90,13 @@ class _EventCardState extends State<EventCard> {
     var eventMonth = new DateFormat("MMM").format(parsedDate);
     var eventDate = new DateFormat("d").format(parsedDate);
     var eventTime = new DateFormat("KK:mm a").format(parsedDate);
+    initState(){
+    super.initState();
+    }
 
-    bool liked = false;
+    
+
+
 
     return 
     // BlocListener<EventListingBloc, EventListingState>(
@@ -112,19 +126,6 @@ class _EventCardState extends State<EventCard> {
       // );
     
      Container(
-        child:     
-        BlocListener<EventListingBloc, EventListingState>(
-        listener: (context, state) {
-          if (state is EventLikeToggledState) {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: Colors.green,
-                content: Text('Success'),
-              ),
-            );
-            liked = true;
-          }
-        },
       child:  Card(
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -321,14 +322,10 @@ class _EventCardState extends State<EventCard> {
                       topLeft: Radius.circular(5)) // green shaped
                   ),
               child: IconButton(
-                icon: Icon(Icons.favorite),
-                color: liked == true ? Colors.red : Colors.white,
-                onPressed: () => _likeButtonPressed()
-                // {
-                //   setState(() {
-                //     liked = !liked;
-                //   });
-                // },
+                // icon: Icon(Icons.favorite),
+                color: Colors.white,
+                icon: new Icon(liked ? Icons.favorite:Icons.favorite_border),
+                onPressed:() => _pressed(),
               ),
             ),
           )
@@ -339,7 +336,7 @@ class _EventCardState extends State<EventCard> {
       ),
       elevation: 5,
       margin: EdgeInsets.all(10),
-    )));
+    ));
   }
 
   Widget cardBack(BuildContext context) {

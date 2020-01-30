@@ -47,24 +47,24 @@ class UserApiProvider {
   // }
 
   //for office
-      Future<String> userLogin(String username, String password) async {
-      var params = {
-      "username": username,
-      "password": password
-    };
-    Uri uri = Uri.parse("http://172.17.40.196:6079/api/Token");
-    final newURI = uri.replace(queryParameters: params);
-       final response =
-        await http.post(newURI,body: json.encode(params));
-        return parseResponse(response);
-  }
+  //     Future<String> userLogin(String username, String password) async {
+  //     var params = {
+  //     "username": username,
+  //     "password": password
+  //   };
+  //   Uri uri = Uri.parse("http://172.17.40.196:6079/api/Token");
+  //   final newURI = uri.replace(queryParameters: params);
+  //      final response =
+  //         await http.post(newURI,body: json.encode(params));
+  //       return parseResponse(response);
+  // }
 
 
 
 // for home
-  //   Future<String> userLogin(String username, String password) async {
-  //    return Future.delayed(Duration(seconds: 0), () => mockUser.toString());
-  // }
+    Future<String> userLogin(String username, String password) async {
+     return Future.delayed(Duration(seconds: 0), () => mockUser.toString());
+  }
 
 
 

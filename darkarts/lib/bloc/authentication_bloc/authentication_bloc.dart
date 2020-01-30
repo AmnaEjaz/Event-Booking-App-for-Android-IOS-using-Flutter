@@ -27,11 +27,7 @@ class AuthenticationBloc
 
 
       if (hasToken) {
-      final String token = await userRepository.getStringValuesSP();
-      final Map<String, dynamic> tokenjson = json.decode(token);
-      final   user =  User.fromJson(tokenjson['User']) ;
-     
-        yield AuthenticationAuthenticated(user:user);
+        yield AuthenticationAuthenticated();
       } else {
         yield AuthenticationUnauthenticated();
       }

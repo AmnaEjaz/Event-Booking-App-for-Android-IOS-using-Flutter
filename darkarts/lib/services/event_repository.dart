@@ -8,9 +8,9 @@ class EventRepository {
   Future<List<Event>> getAllEvents() =>
       _eventsApiProvider.getAllEvents();
 
-  Future<bool> toggleEventLike({
-    @required String eventCode,
-    @required int customerId,
-  }) =>
-      _eventsApiProvider.toggleEventLike(eventCode, customerId);
+  // Future<bool> toggleEventLike({
+  //   @required String eventCode,
+  //   @required int customerId,
+  // }) =>
+  //     _eventsApiProvider.toggleEventLike(eventCode, customerId);
 }

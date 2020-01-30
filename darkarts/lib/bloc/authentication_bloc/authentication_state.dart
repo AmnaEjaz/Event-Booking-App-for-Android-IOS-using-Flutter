@@ -10,8 +10,7 @@ abstract class AuthenticationState extends Equatable {
 class AuthenticationUninitialized extends AuthenticationState {}
 
 class AuthenticationAuthenticated extends AuthenticationState {
- final User user;
-  AuthenticationAuthenticated({@required this.user});
+  AuthenticationAuthenticated();
 }
 
 class AuthenticationUnauthenticated extends AuthenticationState {}
