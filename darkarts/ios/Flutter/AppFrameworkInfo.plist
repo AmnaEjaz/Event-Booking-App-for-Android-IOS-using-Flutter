@@ -22,7 +22,5 @@
   <string>1.0</string>
   <key>MinimumOSVersion</key>
   <string>8.0</string>
-  <key>io.flutter.embedded_views_preview</key>
- <true/>
 </dict>
 </plist>

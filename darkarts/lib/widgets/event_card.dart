@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:darkarts/bloc/event_bloc/nat_event_bloc.dart';
 import 'package:darkarts/bloc/event_bloc/nat_event_states.dart';
 import 'package:darkarts/models/event_model.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:darkarts/widgets/web_view.dart';
+import 'package:darkarts/widgets/event_detail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:darkarts/models/user_model.dart';
 import 'package:darkarts/bloc/event_bloc/nat_event_events.dart';
@@ -20,13 +20,12 @@ class EventCard extends StatefulWidget {
   getStringValuesSP() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
-    if (token !=null  && token.isNotEmpty){
+    if (token != null && token.isNotEmpty) {
       return token;
     }
   }
-@override
 
-
+  @override
   @override
   _EventCardState createState() => _EventCardState();
 }
@@ -36,35 +35,35 @@ class _EventCardState extends State<EventCard> {
   SharedPreferences sharedPrefs;
   var user;
   bool liked = false;
-    void initState() {
-      super.initState();
-      // SharedPreferences.getInstance().then((prefs) {
-      //   setState(() => {
-      //     setState(() => sharedPrefs = prefs)
-      //   });
-      // final Map<String, dynamic> tokenjson = json.decode(sharedPrefs.getString('token'));
-      //  user =  User.fromJson(tokenjson['User']) ;
-      // print(user);
-      // });
-    }
-    _pressed() {
+  void initState() {
+    super.initState();
+    // SharedPreferences.getInstance().then((prefs) {
+    //   setState(() => {
+    //     setState(() => sharedPrefs = prefs)
+    //   });
+    // final Map<String, dynamic> tokenjson = json.decode(sharedPrefs.getString('token'));
+    //  user =  User.fromJson(tokenjson['User']) ;
+    // print(user);
+    // });
+  }
+
+  _pressed() {
     // This function is required for changing the state.
     // Whenever this function is called it refresh the page with new value
-    setState((){
+    setState(() {
       liked = !liked;
       print(liked);
     });
   }
-    _likeButtonPressed() {
-        // BlocProvider.of<EventListingBloc>(context).add(
-        //   ToggleEventLike(
-        //     eventCode: widget.event.eventCode,
-        //     customerId: user==null? 1 : user.referenceId,
-        //   ),
-        // );
-      }
 
-  
+  _likeButtonPressed() {
+    // BlocProvider.of<EventListingBloc>(context).add(
+    //   ToggleEventLike(
+    //     eventCode: widget.event.eventCode,
+    //     customerId: user==null? 1 : user.referenceId,
+    //   ),
+    // );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,43 +89,170 @@ class _EventCardState extends State<EventCard> {
     var eventMonth = new DateFormat("MMM").format(parsedDate);
     var eventDate = new DateFormat("d").format(parsedDate);
     var eventTime = new DateFormat("KK:mm a").format(parsedDate);
-    initState(){
-    super.initState();
+    initState() {
+      super.initState();
     }
 
-    
+    final coursePrice = Container(
+      padding: const EdgeInsets.all(7.0),
+      decoration: new BoxDecoration(
+          border: new Border.all(color: Colors.green),
+          borderRadius: BorderRadius.circular(5.0)),
+      child: new Text(
+        "\$" + widget.event.minTicketPrice.round().toString(),
+        style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+      ),
+    );
 
+    final eventNameRow = new Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      eventMonth.toString(),
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Oswald'),
+                                    ),
+                                    Text(
+                                      eventDate.toString(),
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Oswald',
+                                          color: Colors.lightGreen),
+                                    ),
+                                  ]),
+                            ),
+                            SizedBox(
+                              width: 185, // set this
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    widget.event.eventName,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Oswald'),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5.0),
+                                    child: Row(children: <Widget>[
+                                      Icon(
+                                        Icons.location_on,
+                                        color: Colors.lightGreen,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 4.0),
+                                        child: Text(widget.event.venueName,
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                fontFamily: 'Oswald')),
+                                      )
+                                    ]),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.only(left: 2.0, top: 2),
+                                    child: Row(children: <Widget>[
+                                      Icon(
+                                        Icons.access_time,
+                                        color: Colors.lightGreen,
+                                        size: 20,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Text(eventTime.toString(),
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                fontFamily: 'Oswald')),
+                                      )
+                                    ]),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        
+                          ],
+                        );
+   final buyButton = new  Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 12.0),
+                                  child: Text(
+                                    '\$' + widget.event.minTicketPrice.toString(),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Oswald'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: new RaisedButton(
+                                    onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => EventDetail(widget.event)),
+                                        );
+                                      //open webview
+                                      // Navigator.of(context).push(MaterialPageRoute(
+                                      //     builder: (BuildContext context) =>
+                                      //         MyWebView(
+                                      //           title: widget.event.eventName,
+                                      //           eventId:
+                                      //               widget.event.eventId.toString(),
+                                      //         )));
+                                    },
+                                    textColor: Colors.white,
+                                    color: Colors.lightGreen,
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: new Text(
+                                      "Buy",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+    return
+        // BlocListener<EventListingBloc, EventListingState>(
+        //     listener: (context, state) {
+        //       if (state is Success) {
+        //         Scaffold.of(context).showSnackBar(
+        //           SnackBar(
+        //             backgroundColor: Colors.green,
+        //             content: Text('Success'),
+        //           ),
+        //         );
+        //       }
+        //     },
+        //   child: BlocBuilder<DataBloc, DataState>(
+        //     builder: (context, state) {
+        //       if (state is Initial) {
+        //         return Center(child: Text('Press the Button'));
+        //       }
+        //       if (state is Loading) {
+        //         return Center(child: CircularProgressIndicator());
+        //       }
+        //       if (state is Success) {
+        //         return Center(child: Text('Success'));
+        //       }
+        //     },
+        //   ),
+        // );
 
-
-    return 
-    // BlocListener<EventListingBloc, EventListingState>(
-    //     listener: (context, state) {
-    //       if (state is Success) {
-    //         Scaffold.of(context).showSnackBar(
-    //           SnackBar(
-    //             backgroundColor: Colors.green,
-    //             content: Text('Success'),
-    //           ),
-    //         );
-    //       }
-    //     },
-      //   child: BlocBuilder<DataBloc, DataState>(
-      //     builder: (context, state) {
-      //       if (state is Initial) {
-      //         return Center(child: Text('Press the Button'));
-      //       }
-      //       if (state is Loading) {
-      //         return Center(child: CircularProgressIndicator());
-      //       }
-      //       if (state is Success) {
-      //         return Center(child: Text('Success'));
-      //       }
-      //     },
-      //   ),
-      // );
-    
-     Container(
-      child:  Card(
+        Container(
+            child: Card(
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Stack(
@@ -148,118 +274,16 @@ class _EventCardState extends State<EventCard> {
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                    child:
+                        Row(
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  eventMonth.toString(),
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Oswald'),
-                                ),
-                                Text(
-                                  eventDate.toString(),
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Oswald',
-                                      color: Colors.lightGreen),
-                                ),
-                              ]),
-                        ),
-                        SizedBox(
-                          width: 145, // set this
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                widget.event.eventName,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Oswald'),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5.0),
-                                child: Row(children: <Widget>[
-                                  Icon(
-                                    Icons.location_on,
-                                    color: Colors.lightGreen,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 4.0),
-                                    child: Text(widget.event.venueName,
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontFamily: 'Oswald')),
-                                  )
-                                ]),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 2.0, top: 2),
-                                child: Row(children: <Widget>[
-                                  Icon(
-                                    Icons.access_time,
-                                    color: Colors.lightGreen,
-                                    size: 20,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Text(eventTime.toString(),
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontFamily: 'Oswald')),
-                                  )
-                                ]),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(top: 12.0),
-                              child: Text(
-                                '\$' + widget.event.minTicketPrice.toString(),
-                                style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Oswald'),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5.0),
-                              child: new RaisedButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          MyWebView(
-                                            title: widget.event.eventName,
-                                            eventId:
-                                                widget.event.eventId.toString(),
-                                          )));
-                                },
-                                textColor: Colors.white,
-                                color: Colors.lightGreen,
-                                padding: const EdgeInsets.all(8.0),
-                                child: new Text(
-                                  "Buy",
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        Expanded(
+                            flex: 5,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 0.0),
+                              child: eventNameRow
+                            )),
+                        Expanded(flex: 2, child: buyButton)
                       ],
                     ),
                   ),
@@ -324,8 +348,8 @@ class _EventCardState extends State<EventCard> {
               child: IconButton(
                 // icon: Icon(Icons.favorite),
                 color: Colors.white,
-                icon: new Icon(liked ? Icons.favorite:Icons.favorite_border),
-                onPressed:() => _pressed(),
+                icon: new Icon(liked ? Icons.favorite : Icons.favorite_border),
+                onPressed: () => _pressed(),
               ),
             ),
           )
